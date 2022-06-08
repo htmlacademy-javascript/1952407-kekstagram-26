@@ -6,11 +6,11 @@ function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
 
   if (max < 0 || min < 0) {
-    return 'Значения не могут быть меньше нуля';
+    return -1;
   }
 
   if (max <= min) {
-    return 'Значение [после] не может быть меньше или равно значению [до]';
+    return null;
   }
 
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
@@ -22,9 +22,10 @@ console.log(getRandomIntInclusive(0, -11));
 
 //Функция для проверки максимальной длины строки Кекстаграм
 
-function checkingCommentLength(chekingComment, maxLenght) {
-  return chekingComment.length <= maxLenght;
+function checkCommentLength(checkComment, maxLength) {
+  return checkComment.length <= maxLength;
 }
 
-checkingCommentLength('Some comment', 140);
+// eslint-disable-next-line no-console
+console.log(checkCommentLength('Some comment', 140));
 
