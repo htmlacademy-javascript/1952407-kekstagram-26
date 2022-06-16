@@ -91,17 +91,23 @@ const objectsPhotos = Array.from({ length: 4 }, generatePhoto);
 // console.log(getRandomArrayElement(userNames));
 
 
-// const maxArrayLength = 25;
-
 const getRandomNumbersInArray = (minValue, maxArrayLength) => {
   const randomArray = [];
-  let randomArrayValue;
-  const foo = (currentValue) => currentValue === randomArrayValue;
+  let randomArrayValue = minValue;
+  const getСomparison = (currentValue) => currentValue === randomArrayValue;
+
+  if (minValue < -1 || minValue > maxArrayLength) {
+    return null;
+  }
 
   while (randomArray.length < maxArrayLength) {
     randomArrayValue = getRandomPositiveInteger(minValue, maxArrayLength);
 
-    if (randomArray.find(foo) >= minValue) {
+    if (randomArray.length >= maxArrayLength - minValue + 1) {
+      break;
+    }
+
+    if (randomArray.find(getСomparison) >= minValue) {
       getRandomPositiveInteger(minValue, maxArrayLength);
     } else {
       randomArray.push(randomArrayValue);
@@ -111,24 +117,7 @@ const getRandomNumbersInArray = (minValue, maxArrayLength) => {
   return randomArray;
 };
 
-const randomArray = getRandomNumbersInArray(1, 25);
-
-console.log(randomArray);
-
-
-//тест с сортировкой
-for (let i = 0; i <= randomArray.length - 2; i++) {
-  let minValue = randomArray[i];
-
-  for (let j = i + 1; j <= randomArray.length - 1; j++) {
-    if (randomArray[j] < minValue) {
-      minValue = randomArray[j];
-      let swap = randomArray[i];
-      randomArray[i] = minValue;
-      randomArray[j] = swap;
-    }
-  }
-}
+const randomArray = getRandomNumbersInArray(5, 10);
 
 console.log(randomArray);
 
