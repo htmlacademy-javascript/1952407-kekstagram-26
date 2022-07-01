@@ -6,18 +6,24 @@ console.log('модуль generate-picture.js работает'); //удалю �
 // eslint-disable-next-line no-console
 console.log(generatePhotos()); // удалю попозже
 
-const pictures = document.querySelector('.pictures');
-const usersPhoto = generatePhotos();
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const renderPhotos = () => {
+  const pictures = document.querySelector('.pictures');
+  const usersPhotos = generatePhotos();
+  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const usersPhotoFragment = document.createDocumentFragment();
+  const usersPhotoFragment = document.createDocumentFragment();
 
-usersPhoto.forEach((element) => {
-  const userPicture = pictureTemplate.cloneNode(true);
-  userPicture.querySelector('.picture__img').src = element.url;
-  userPicture.querySelector('.picture__likes').textContent = element.likes;
-  userPicture.querySelector('.picture__comments').textContent = element.comments.length;
-  usersPhotoFragment.append(userPicture);
-});
+  usersPhotos.forEach((element) => {
+    const userPicture = pictureTemplate.cloneNode(true);
+    userPicture.querySelector('.picture__img').src = element.url;
+    userPicture.querySelector('.picture__likes').textContent = element.likes;
+    userPicture.querySelector('.picture__comments').textContent = element.comments.length;
+    usersPhotoFragment.append(userPicture);
+  });
 
-pictures.append(usersPhotoFragment);
+  return pictures.append(usersPhotoFragment);
+};
+
+renderPhotos();
+
+
