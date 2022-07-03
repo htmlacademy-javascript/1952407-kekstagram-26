@@ -1,19 +1,14 @@
-import { generatePhotos } from './data.js';
-
-// eslint-disable-next-line no-console
-console.log('модуль generate-picture.js работает'); //удалю попозже
-
-// eslint-disable-next-line no-console
-console.log(generatePhotos()); // удалю попозже
+import { usersPhotosData } from './constants.js';
 
 const renderPhotos = () => {
   const pictures = document.querySelector('.pictures');
-  const usersPhotos = generatePhotos();
-  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  const pictureTemplate = document.querySelector('#picture')
+    .content
+    .querySelector('.picture');
 
   const usersPhotoFragment = document.createDocumentFragment();
 
-  usersPhotos.forEach((element) => {
+  usersPhotosData.forEach((element) => {
     const userPicture = pictureTemplate.cloneNode(true);
     userPicture.querySelector('.picture__img').src = element.url;
     userPicture.querySelector('.picture__likes').textContent = element.likes;
@@ -25,5 +20,3 @@ const renderPhotos = () => {
 };
 
 renderPhotos();
-
-
