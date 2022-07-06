@@ -5,6 +5,9 @@ import {
   getRandomArrayElement
 } from './util.js';
 
+// сколько сгенерировать фотографий
+const MAX_PHOTO_COUNT = 25;
+
 const USER_NAMES = [
   'Елизавета',
   'Михаил',
@@ -123,8 +126,6 @@ const generatePhoto = (count) => {
 
   return array;
 };
-
-const MAX_PHOTO_COUNT = 25; //сколько сделать фотографий
 
 const generatePhotos = () => generatePhoto(MAX_PHOTO_COUNT);
 

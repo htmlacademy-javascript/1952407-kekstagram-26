@@ -1,1 +1,2 @@
-import './generate-picture.js';
+import './generate-thumbnails.js';
+// import './show-big-picture.js';

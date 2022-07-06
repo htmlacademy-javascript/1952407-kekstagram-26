@@ -58,10 +58,21 @@ const generateRandomNumber = () => {
 // Функция для получения случайного элемента из массива. Элемент может повторяться.
 const getRandomArrayElement = (array) => array[getRandomPositiveInteger(0, array.length - 1)];
 
+// Функция для генерации html элемента
+const makeElement = (tagName, className, text) => {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  if (text) {
+    element.textContent = text;
+  }
+  return element;
+};
+
 export {
   getRandomPositiveInteger,
   getArrayWithRandomNumbers,
   checkStringLength,
   generateRandomNumber,
-  getRandomArrayElement
+  getRandomArrayElement,
+  makeElement
 };
