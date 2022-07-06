@@ -46,32 +46,25 @@ const generateComments = (photosData) => {
 
 
 const addEscKeyHandler = (evt) => {
-  const counter = 1;
   if (evt.keyCode === 27) {
-    countValue++;
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
   }
 
-  if (countValue >= counter) {
-    document.removeEventListener('keydown', addEscKeyHandler);
-    countValue = 0;
-  }
+  document.removeEventListener('keydown', addEscKeyHandler);
+  closeButton.removeEventListener('click', addCloseClickHandler);
 };
 
-const addCloseClickHandler = () => {
-  const counter = 1;
-  countValue++;
+// декларативно тк вызывается в функции addEscKeyHandler
+function addCloseClickHandler() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  if (countValue >= counter) {
-    closeButton.removeEventListener('click', addCloseClickHandler);
-    document.removeEventListener('keydown', addEscKeyHandler);
-    countValue = 0;
-  }
-};
 
-const openBigPicture = (thumbnail, photosData, i) => {
+  closeButton.removeEventListener('click', addCloseClickHandler);
+  document.removeEventListener('keydown', addEscKeyHandler);
+}
+
+const addPictureListener = (thumbnail, photosData, i) => {
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
 
@@ -86,5 +79,5 @@ const openBigPicture = (thumbnail, photosData, i) => {
   });
 };
 
-export { openBigPicture };
+export { addPictureListener };
 
