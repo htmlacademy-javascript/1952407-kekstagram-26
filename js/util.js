@@ -68,11 +68,19 @@ const makeElement = (tagName, className, text) => {
   return element;
 };
 
+// для обработчика событий. нажати ли клавиша esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+// для обработчика событий. нажати ли клавиша enter
+const isEnterKey = (evt) => evt.key === 'Enter';
+
 export {
   getRandomPositiveInteger,
   getArrayWithRandomNumbers,
   checkStringLength,
   generateRandomNumber,
   getRandomArrayElement,
-  makeElement
+  makeElement,
+  isEscapeKey,
+  isEnterKey
 };

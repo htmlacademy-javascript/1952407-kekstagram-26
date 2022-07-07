@@ -1,9 +1,8 @@
 import { COMMENT_PICTURE_SIZE } from './constants.js';
-import { makeElement } from './util.js';
+import { makeElement, isEscapeKey, isEnterKey } from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-let countValue = 0;
 
 // переменные для подстановки данных к большой картинке
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -45,23 +44,26 @@ const generateComments = (photosData) => {
 };
 
 
-const addEscKeyHandler = (evt) => {
-  if (evt.keyCode === 27) {
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
+const bigPictureEscKeydownHandler = (evt) => {
+  if (isEscapeKey(evt)) {
+    closeButtonClickHandler();
   }
-
-  document.removeEventListener('keydown', addEscKeyHandler);
-  closeButton.removeEventListener('click', addCloseClickHandler);
 };
 
-// декларативно тк вызывается в функции addEscKeyHandler
-function addCloseClickHandler() {
+const closeButtonEnterKeydownHandler = (evt) => {
+  if (isEnterKey(evt)) {
+    closeButtonClickHandler();
+  }
+};
+
+// декларативно тк вызывается в функции bigPictureEscKeydownHandler и closeButtonEnterKeydownHandler
+function closeButtonClickHandler() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  closeButton.removeEventListener('click', addCloseClickHandler);
-  document.removeEventListener('keydown', addEscKeyHandler);
+  closeButton.removeEventListener('click', closeButtonClickHandler);
+  document.removeEventListener('keydown', bigPictureEscKeydownHandler);
+  closeButton.removeEventListener('keydown', closeButtonEnterKeydownHandler);
 }
 
 const addPictureListener = (thumbnail, photosData, i) => {
@@ -74,8 +76,9 @@ const addPictureListener = (thumbnail, photosData, i) => {
     setDataToBigPicture(photosData[i]);
     generateComments(photosData[i]);
 
-    document.addEventListener('keydown', addEscKeyHandler);
-    closeButton.addEventListener('click', addCloseClickHandler);
+    document.addEventListener('keydown', bigPictureEscKeydownHandler);
+    closeButton.addEventListener('click', closeButtonClickHandler);
+    closeButton.addEventListener('keydown', closeButtonEnterKeydownHandler);
   });
 };
 
