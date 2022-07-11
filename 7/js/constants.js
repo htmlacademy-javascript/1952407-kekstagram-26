@@ -1,0 +1,7 @@
+// размеры фото пользователя в комментариях
+const COMMENT_PICTURE_SIZE = 35;
+
+const MAX_COMMENT_LENGTH = 140;
+const MAX_NUMBER_OF_HASHTAGS = 5;
+
+export { COMMENT_PICTURE_SIZE, MAX_COMMENT_LENGTH, MAX_NUMBER_OF_HASHTAGS };
