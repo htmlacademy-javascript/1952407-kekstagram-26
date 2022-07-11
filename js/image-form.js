@@ -1,3 +1,4 @@
+import { pristine } from './validate-form.js';
 import { isEscapeKey } from './util.js';
 
 const imageFormElement = document.querySelector('.img-upload__form');
@@ -7,6 +8,7 @@ const uploadButtonElement = imageFormElement.querySelector('#upload-file');
 const closeButtonElement = imageFormElement.querySelector('.img-upload__cancel');
 const photoEditPopupElement = imageFormElement.querySelector('.img-upload__overlay');
 
+// открытие и закрытие формы
 const photoEditPopupElementEscKeydownHandler = (evt) => {
   if (isEscapeKey(evt)) {
     if (document.activeElement === hashtagInputElement || document.activeElement === commentInputElement) {
@@ -34,3 +36,14 @@ const uploadButtonElementUploadHandler = () => {
 };
 
 uploadButtonElement.addEventListener('change', uploadButtonElementUploadHandler);
+
+// отправка формы
+imageFormElement.addEventListener('submit', (evt) => {
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
+  }
+});
+
+
+export { hashtagInputElement, commentInputElement, imageFormElement };

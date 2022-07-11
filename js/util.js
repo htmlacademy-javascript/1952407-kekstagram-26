@@ -1,3 +1,5 @@
+import { MAX_COMMENT_LENGTH } from './constants.js';
+
 // Функция получения рандомных чисел. От Кекса
 function getRandomPositiveInteger(a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -7,7 +9,7 @@ function getRandomPositiveInteger(a, b) {
 }
 
 // Функция для проверки максимальной длины строки
-const checkStringLength = (string, length) => string.length <= length;
+const checkStringLength = (inputValue) => inputValue.length <= MAX_COMMENT_LENGTH;
 
 // Функция для получения массива случайных неповторяющихся положительных целых чисел
 const getArrayWithRandomNumbers = (minValue, maxArrayLength) => {
