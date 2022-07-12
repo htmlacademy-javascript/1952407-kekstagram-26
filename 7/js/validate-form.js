@@ -39,26 +39,34 @@ const checkHashtagsNumber = (inputValue) => {
 pristine.addValidator(
   hashtagInputElement,
   checkHashtagsForNoRepeate,
-  'Нельзя повторять хэштэги'
+  'Нельзя повторять хэштэги',
+  1, // приоритет показа смс
+  true // остановка. если ошибка показывает 1 смс
 );
 
 pristine.addValidator(
   hashtagInputElement,
   checkHashtagsNumber,
-  `Количество хэштэгов не может быть больше ${MAX_NUMBER_OF_HASHTAGS}`
+  `Количество хэштэгов не может быть больше ${MAX_NUMBER_OF_HASHTAGS}`,
+  1,
+  true
 );
 
 pristine.addValidator(
   hashtagInputElement,
   checkHashtagsText,
-  'Хэштэг должен начинаться со знака  #. Хэштэг состоит только из букв и цифр без пробелов. Максимальная длина символов после # - 19.'
+  'Хэштэг начинается с #, содержит буквы и цифры без пробелов, длина 19 символов после #',
+  1,
+  true
 );
 
 // комментарий
 pristine.addValidator(
   commentInputElement,
   checkStringLength,
-  `не более ${MAX_COMMENT_LENGTH} символов`
+  `не более ${MAX_COMMENT_LENGTH} символов`,
+  1,
+  true
 );
 
 export { pristine };

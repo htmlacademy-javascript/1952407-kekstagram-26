@@ -108,7 +108,7 @@ const generateObjectPhoto = (idPhoto, pictureNumber) => ({
   url: `photos/${pictureNumber}.jpg`,
   description: getRandomArrayElement(USER_DESCRIPTIONS),
   likes: getRandomPositiveInteger(15, 200),
-  comments: generateComment(getRandomPositiveInteger(1, 6))
+  comments: generateComment(getRandomPositiveInteger(2, 30))
 });
 
 // Генерируем массив фоток
