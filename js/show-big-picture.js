@@ -19,8 +19,8 @@ const setDataToBigPicture = (photosData) => {
   bigPictureLikes.textContent = photosData.likes;
   bigPictureCommentsNumber.textContent = photosData.comments.length;
   bigPictureDescription.textContent = photosData.description;
-  bigPictureCommentsCount.classList.add('hidden');
-  bigPictureLoader.classList.add('hidden');
+  // bigPictureCommentsCount.classList.add('hidden');
+  // bigPictureLoader.classList.add('hidden');
 };
 
 // добавление коментов в большую картинку
@@ -41,6 +41,10 @@ const generateComments = (photosData) => {
   });
 
   return bigPictureCommentsList.append(commentsFragment);
+};
+
+const showComments = () => {
+  
 };
 
 

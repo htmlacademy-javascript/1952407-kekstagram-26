@@ -43,7 +43,7 @@ const bankOfUsedRandomNumber = []; // сюда записываются испо
 // Функция для получения неповторяющегося положительного числа от 0
 const generateRandomNumber = () => {
   const min = 1;
-  const max = 200; // max должен быть больше чем вызовов этой функции, иначе цикл вайл будет работать бесконечно
+  const max = 1000; // max должен быть больше чем вызовов этой функции, иначе цикл вайл будет работать бесконечно
   let randomNumber = getRandomPositiveInteger(min, max);
   const getСomparison = (currentValue) => currentValue === randomNumber;
 

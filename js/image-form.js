@@ -18,12 +18,20 @@ const photoEditPopupElementEscKeydownHandler = (evt) => {
   }
 };
 
+const resetErrorText = (element) => {
+  for (const errorTextElement of element) {
+    errorTextElement.textContent = '';
+  }
+};
+
 function closeButtonElementClickHandler() {
+  const errorTextElement = imageFormElement.querySelectorAll('.js-pristine-validation__error-text');
   document.body.classList.remove('modal-open');
   photoEditPopupElement.classList.add('hidden');
   uploadButtonElement.value = '';
   hashtagInputElement.value = '';
   commentInputElement.value = '';
+  resetErrorText(errorTextElement);
   closeButtonElement.removeEventListener('click', closeButtonElementClickHandler);
   document.removeEventListener('keydown', photoEditPopupElementEscKeydownHandler);
 }
