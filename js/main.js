@@ -1,2 +1,3 @@
 import './generate-thumbnails.js';
-// import './show-big-picture.js';
+import './validate-form.js';
+import './image-form.js';

@@ -1,5 +1,5 @@
 import { generatePhotos } from './data.js';
-import { openBigPicture } from './show-big-picture.js';
+import { addPictureListener } from './show-big-picture.js';
 
 const usersPhotosData = generatePhotos();
 
@@ -17,7 +17,7 @@ const renderPhotos = () => {
     userPicture.querySelector('.picture__likes').textContent = element.likes;
     userPicture.querySelector('.picture__comments').textContent = element.comments.length;
 
-    openBigPicture(userPicture, usersPhotosData, i);
+    addPictureListener(userPicture, usersPhotosData, i);
 
     usersPhotoFragment.append(userPicture);
   });

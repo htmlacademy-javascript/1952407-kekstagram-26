@@ -1,9 +1,8 @@
 import { COMMENT_PICTURE_SIZE } from './constants.js';
-import { makeElement } from './util.js';
+import { makeElement, isEscapeKey, isEnterKey } from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-let countValue = 0;
 
 // переменные для подстановки данных к большой картинке
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -45,33 +44,29 @@ const generateComments = (photosData) => {
 };
 
 
-const addEscKeyHandler = (evt) => {
-  const counter = 1;
-  if (evt.keyCode === 27) {
-    countValue++;
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
-
-  if (countValue >= counter) {
-    document.removeEventListener('keydown', addEscKeyHandler);
-    countValue = 0;
+const bigPictureEscKeydownHandler = (evt) => {
+  if (isEscapeKey(evt)) {
+    closeButtonClickHandler();
   }
 };
 
-const addCloseClickHandler = () => {
-  const counter = 1;
-  countValue++;
+const closeButtonEnterKeydownHandler = (evt) => {
+  if (isEnterKey(evt)) {
+    closeButtonClickHandler();
+  }
+};
+
+// декларативно тк вызывается в функции bigPictureEscKeydownHandler и closeButtonEnterKeydownHandler
+function closeButtonClickHandler() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  if (countValue >= counter) {
-    closeButton.removeEventListener('click', addCloseClickHandler);
-    document.removeEventListener('keydown', addEscKeyHandler);
-    countValue = 0;
-  }
-};
 
-const openBigPicture = (thumbnail, photosData, i) => {
+  closeButton.removeEventListener('click', closeButtonClickHandler);
+  document.removeEventListener('keydown', bigPictureEscKeydownHandler);
+  closeButton.removeEventListener('keydown', closeButtonEnterKeydownHandler);
+}
+
+const addPictureListener = (thumbnail, photosData, i) => {
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
 
@@ -81,10 +76,11 @@ const openBigPicture = (thumbnail, photosData, i) => {
     setDataToBigPicture(photosData[i]);
     generateComments(photosData[i]);
 
-    document.addEventListener('keydown', addEscKeyHandler);
-    closeButton.addEventListener('click', addCloseClickHandler);
+    document.addEventListener('keydown', bigPictureEscKeydownHandler);
+    closeButton.addEventListener('click', closeButtonClickHandler);
+    closeButton.addEventListener('keydown', closeButtonEnterKeydownHandler);
   });
 };
 
-export { openBigPicture };
+export { addPictureListener };
 

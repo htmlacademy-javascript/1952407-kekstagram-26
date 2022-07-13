@@ -1,3 +1,5 @@
+import { MAX_COMMENT_LENGTH } from './constants.js';
+
 // Функция получения рандомных чисел. От Кекса
 function getRandomPositiveInteger(a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -7,7 +9,7 @@ function getRandomPositiveInteger(a, b) {
 }
 
 // Функция для проверки максимальной длины строки
-const checkStringLength = (string, length) => string.length <= length;
+const checkStringLength = (inputValue) => inputValue.length <= MAX_COMMENT_LENGTH;
 
 // Функция для получения массива случайных неповторяющихся положительных целых чисел
 const getArrayWithRandomNumbers = (minValue, maxArrayLength) => {
@@ -41,7 +43,7 @@ const bankOfUsedRandomNumber = []; // сюда записываются испо
 // Функция для получения неповторяющегося положительного числа от 0
 const generateRandomNumber = () => {
   const min = 1;
-  const max = 200; // max должен быть больше чем вызовов этой функции, иначе цикл вайл будет работать бесконечно
+  const max = 1000; // max должен быть больше чем вызовов этой функции, иначе цикл вайл будет работать бесконечно
   let randomNumber = getRandomPositiveInteger(min, max);
   const getСomparison = (currentValue) => currentValue === randomNumber;
 
@@ -68,11 +70,19 @@ const makeElement = (tagName, className, text) => {
   return element;
 };
 
+// для обработчика событий. нажати ли клавиша esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+// для обработчика событий. нажати ли клавиша enter
+const isEnterKey = (evt) => evt.key === 'Enter';
+
 export {
   getRandomPositiveInteger,
   getArrayWithRandomNumbers,
   checkStringLength,
   generateRandomNumber,
   getRandomArrayElement,
-  makeElement
+  makeElement,
+  isEscapeKey,
+  isEnterKey
 };
