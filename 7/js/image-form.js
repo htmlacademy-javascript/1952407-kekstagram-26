@@ -25,13 +25,13 @@ const resetErrorText = (element) => {
 };
 
 function closeButtonElementClickHandler() {
-  const errorTextElement = imageFormElement.querySelectorAll('.js-pristine-validation__error-text');
+  const errorTextElements = imageFormElement.querySelectorAll('.js-pristine-validation__error-text');
   document.body.classList.remove('modal-open');
   photoEditPopupElement.classList.add('hidden');
   uploadButtonElement.value = '';
   hashtagInputElement.value = '';
   commentInputElement.value = '';
-  resetErrorText(errorTextElement);
+  resetErrorText(errorTextElements);
   closeButtonElement.removeEventListener('click', closeButtonElementClickHandler);
   document.removeEventListener('keydown', photoEditPopupElementEscKeydownHandler);
 }
