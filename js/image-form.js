@@ -1,5 +1,6 @@
 import { pristine } from './validate-form.js';
 import { isEscapeKey } from './util.js';
+import { resetScale, setDefaultScale } from './image-scale.js';
 
 const imageFormElement = document.querySelector('.img-upload__form');
 const hashtagInputElement = imageFormElement.querySelector('.text__hashtags');
@@ -34,6 +35,8 @@ function closeButtonElementClickHandler() {
   resetErrorText(errorTextElements);
   closeButtonElement.removeEventListener('click', closeButtonElementClickHandler);
   document.removeEventListener('keydown', photoEditPopupElementEscKeydownHandler);
+
+  resetScale();
 }
 
 const uploadButtonElementUploadHandler = () => {
@@ -41,6 +44,8 @@ const uploadButtonElementUploadHandler = () => {
   photoEditPopupElement.classList.remove('hidden');
   closeButtonElement.addEventListener('click', closeButtonElementClickHandler);
   document.addEventListener('keydown', photoEditPopupElementEscKeydownHandler);
+
+  setDefaultScale();
 };
 
 uploadButtonElement.addEventListener('change', uploadButtonElementUploadHandler);
