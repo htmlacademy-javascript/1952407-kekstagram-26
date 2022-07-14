@@ -14,6 +14,7 @@ const bigPictureLoader = bigPicture.querySelector('.comments-loader');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const bigPictureCurrentCommentsCount = bigPicture.querySelector('.social__current-comments-count');
+let bigPictureLoaderClickHandler;
 
 // подстановка данных в большую картинку
 const setDataToBigPicture = (photosData) => {
@@ -61,7 +62,7 @@ const showComments = (photosData) => {
   const minificatedComments = photosData.comments.slice(commentsStart, commentsCounter);
   generateComments(minificatedComments);
 
-  const bigPictureLoaderClickHandler = () => {
+  bigPictureLoaderClickHandler = () => {
     commentsCounter += SHOW_COMMENTS_STEP;
     const additionalMinificatedcomments = photosData.comments.slice(commentsStart, commentsCounter);
     generateComments(additionalMinificatedcomments);
@@ -97,7 +98,7 @@ function closeButtonClickHandler() {
   closeButton.removeEventListener('click', closeButtonClickHandler);
   document.removeEventListener('keydown', bigPictureEscKeydownHandler);
   closeButton.removeEventListener('keydown', closeButtonEnterKeydownHandler);
-  // bigPictureLoader.removeEventListener('click', bigPictureLoaderClickHandler); // как его удалить
+  bigPictureLoader.removeEventListener('click', bigPictureLoaderClickHandler);
 }
 
 const addPictureListener = (thumbnail, photosData, i) => {
