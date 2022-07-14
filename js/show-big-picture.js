@@ -1,5 +1,6 @@
 import { COMMENT_PICTURE_SIZE } from './constants.js';
 import { makeElement, isEscapeKey, isEnterKey } from './util.js';
+import { SHOW_COMMENTS_STEP } from './constants.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
@@ -12,6 +13,7 @@ const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count
 const bigPictureLoader = bigPicture.querySelector('.comments-loader');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
+const bigPictureCurrentCommentsCount = bigPicture.querySelector('.social__current-comments-count');
 
 // подстановка данных в большую картинку
 const setDataToBigPicture = (photosData) => {
@@ -19,15 +21,12 @@ const setDataToBigPicture = (photosData) => {
   bigPictureLikes.textContent = photosData.likes;
   bigPictureCommentsNumber.textContent = photosData.comments.length;
   bigPictureDescription.textContent = photosData.description;
-  bigPictureCommentsCount.classList.add('hidden');
-  bigPictureLoader.classList.add('hidden');
 };
 
-// добавление коментов в большую картинку
-const generateComments = (photosData) => {
+const generateComments = (commentsArray) => {
   const commentsFragment = document.createDocumentFragment();
   bigPictureCommentsList.innerHTML = '';
-  photosData.comments.forEach(({ message, name, avatar }) => {
+  commentsArray.forEach(({ message, name, avatar }) => {
     const commentItem = makeElement('li', 'social__comment');
     const commentPicture = makeElement('img', 'social__picture');
     const commentText = makeElement('p', 'social__text', message);
@@ -43,6 +42,40 @@ const generateComments = (photosData) => {
   return bigPictureCommentsList.append(commentsFragment);
 };
 
+// отображение коментариев по 5 штук
+const showComments = (photosData) => {
+  const commentsStart = 0;
+  let commentsCounter = SHOW_COMMENTS_STEP;
+
+  if (photosData.comments.length <= SHOW_COMMENTS_STEP && photosData.comments.length !== 0) {
+    bigPictureCommentsCount.classList.add('hidden');
+    bigPictureLoader.classList.add('hidden');
+  }
+
+  if (photosData.comments.length > SHOW_COMMENTS_STEP) {
+    bigPictureCommentsCount.classList.remove('hidden');
+    bigPictureLoader.classList.remove('hidden');
+    bigPictureCurrentCommentsCount.textContent = SHOW_COMMENTS_STEP;
+  }
+
+  const minificatedComments = photosData.comments.slice(commentsStart, commentsCounter);
+  generateComments(minificatedComments);
+
+  const bigPictureLoaderClickHandler = () => {
+    commentsCounter += SHOW_COMMENTS_STEP;
+    const additionalMinificatedcomments = photosData.comments.slice(commentsStart, commentsCounter);
+    generateComments(additionalMinificatedcomments);
+
+    bigPictureCurrentCommentsCount.textContent = bigPictureCommentsList.children.length;
+
+    if (photosData.comments.length === bigPictureCommentsList.children.length) {
+      bigPictureLoader.classList.add('hidden');
+      bigPictureLoader.removeEventListener('click', bigPictureLoaderClickHandler);
+    }
+  };
+
+  bigPictureLoader.addEventListener('click', bigPictureLoaderClickHandler);
+};
 
 const bigPictureEscKeydownHandler = (evt) => {
   if (isEscapeKey(evt)) {
@@ -64,6 +97,7 @@ function closeButtonClickHandler() {
   closeButton.removeEventListener('click', closeButtonClickHandler);
   document.removeEventListener('keydown', bigPictureEscKeydownHandler);
   closeButton.removeEventListener('keydown', closeButtonEnterKeydownHandler);
+  // bigPictureLoader.removeEventListener('click', bigPictureLoaderClickHandler); // как его удалить
 }
 
 const addPictureListener = (thumbnail, photosData, i) => {
@@ -74,7 +108,7 @@ const addPictureListener = (thumbnail, photosData, i) => {
     document.body.classList.add('modal-open');
 
     setDataToBigPicture(photosData[i]);
-    generateComments(photosData[i]);
+    showComments(photosData[i]);
 
     document.addEventListener('keydown', bigPictureEscKeydownHandler);
     closeButton.addEventListener('click', closeButtonClickHandler);
