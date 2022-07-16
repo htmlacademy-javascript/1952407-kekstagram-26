@@ -24,6 +24,7 @@ const setDataToBigPicture = (photosData) => {
   bigPictureDescription.textContent = photosData.description;
 };
 
+
 const generateComments = (photosData, commentsStart, commentsCounter) => {
   const commentsFragment = document.createDocumentFragment();
   bigPictureCommentsList.innerHTML = '';
@@ -61,6 +62,7 @@ const showComments = (photosData) => {
     bigPictureLoader.classList.remove('hidden');
     bigPictureCurrentCommentsCount.textContent = SHOW_COMMENTS_STEP;
   }
+
 
   generateComments(photosData, commentsStart, commentsCounter);
 
