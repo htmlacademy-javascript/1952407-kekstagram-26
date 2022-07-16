@@ -10,10 +10,14 @@ const effectMarvinElement = document.querySelector('#effect-marvin');
 const effectPhobosElement = document.querySelector('#effect-phobos');
 const effectHeatElement = document.querySelector('#effect-heat');
 
-const startValue = 1;
-const minValue = 0;
-const maxValue = 1;
-const stepValue = 0.1;
+const EffectsValues = {
+  default: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
+  chrome: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
+  sepia: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
+  marvin: { startValue: 100, minValue: 0, maxValue: 100, stepValue: 1 },
+  phobos: { startValue: 3, minValue: 0, maxValue: 3, stepValue: 0.1 },
+  heat: { startValue: 3, minValue: 1, maxValue: 3, stepValue: 0.1 },
+};
 
 const resetSlider = () => {
   sliderElement.classList.add('hidden');
@@ -26,11 +30,11 @@ const resetSlider = () => {
 const createSlider = () => {
   noUiSlider.create(sliderElement, {
     range: {
-      min: minValue,
-      max: maxValue,
+      min: EffectsValues.default.minValue,
+      max: EffectsValues.default.maxValue,
     },
-    start: startValue,
-    step: stepValue,
+    start: EffectsValues.default.startValue,
+    step: EffectsValues.default.stepValue,
     connect: 'lower',
     format: {
       to: (value) => { // значение из слайдера в форму
@@ -51,17 +55,17 @@ const destroySlider = () => {
   sliderElement.noUiSlider.destroy();
 };
 
-const setSliderSettings = (effectId, min, max, step, start, effectClass, filterName, unitOfMeasurement) => {
+const setSliderSettings = (effectId, minValue, maxValue, stepValue, startValue, effectClass, filterName, unitOfMeasurement) => {
   if (effectId.checked) {
     sliderElement.noUiSlider.updateOptions({
       range: {
-        min: min,
-        max: max
+        min: minValue,
+        max: maxValue
       },
-      step: step,
+      step: stepValue,
     });
 
-    sliderElement.noUiSlider.set(start);
+    sliderElement.noUiSlider.set(startValue);
     sliderElement.classList.remove('hidden');
     imageUploadElement.className = '';
     imageUploadElement.classList.add(effectClass);
@@ -77,47 +81,70 @@ const effectNoneElementClickHandler = () => {
   sliderElement.classList.add('hidden');
   effectLevelValueElement.value = '';
   imageUploadElement.className = '';
-  imageUploadElement.removeAttribute('style');
+  imageUploadElement.style.filter = 'none';
 };
 
 const effectChromeElementClickHandler = () => setSliderSettings(
-  effectChromeElement, minValue, maxValue, stepValue, startValue, 'effects__preview--chrome', 'grayscale', ''
+  effectChromeElement,
+  EffectsValues.chrome.minValue,
+  EffectsValues.chrome.maxValue,
+  EffectsValues.chrome.stepValue,
+  EffectsValues.chrome.startValue,
+  'effects__preview--chrome',
+  'grayscale',
+  ''
 );
 
 const effectSepiaElementClickHandler = () => setSliderSettings(
-  effectSepiaElement, minValue, maxValue, stepValue, startValue, 'effects__preview--sepia', 'sepia', ''
+  effectSepiaElement,
+  EffectsValues.sepia.minValue,
+  EffectsValues.sepia.maxValue,
+  EffectsValues.sepia.stepValue,
+  EffectsValues.sepia.startValue,
+  'effects__preview--sepia',
+  'sepia',
+  ''
 );
 
+const effectMarvinElementClickHandler = () => setSliderSettings(
+  effectMarvinElement,
+  EffectsValues.marvin.minValue,
+  EffectsValues.marvin.maxValue,
+  EffectsValues.marvin.stepValue,
+  EffectsValues.marvin.startValue,
+  'effects__preview--marvin',
+  'invert',
+  '%'
+);
 
-// const effectChromeElementClickHandler = () => {
-//   if (effectChromeElement.checked) {
-//     sliderElement.noUiSlider.updateOptions({
-//       range: {
-//         min: minValue,
-//         max: maxValue
-//       },
-//       step: stepValue,
-//     });
+const effectPhobosElementClickHandler = () => setSliderSettings(
+  effectPhobosElement,
+  EffectsValues.phobos.minValue,
+  EffectsValues.phobos.maxValue,
+  EffectsValues.phobos.stepValue,
+  EffectsValues.phobos.startValue,
+  'effects__preview--phobos',
+  'blur',
+  'px'
+);
 
-//     sliderElement.noUiSlider.set(startValue);
-//     sliderElement.classList.remove('hidden');
-//     imageUploadElement.className = '';
-//     imageUploadElement.classList.add('effects__preview--chrome');
-
-//     sliderElement.noUiSlider.on('update', () => {
-//       effectLevelValueElement.value = sliderElement.noUiSlider.get();
-//       imageUploadElement.style.filter = `grayscale(${sliderElement.noUiSlider.get()})`;
-//     });
-//   }
-// };
-
+const effectHeatElementClickHandler = () => setSliderSettings(
+  effectHeatElement,
+  EffectsValues.heat.minValue,
+  EffectsValues.heat.maxValue,
+  EffectsValues.heat.stepValue,
+  EffectsValues.heat.startValue,
+  'effects__preview--heat',
+  'brightness',
+  ''
+);
 
 effectNoneElement.addEventListener('change', effectNoneElementClickHandler);
 effectChromeElement.addEventListener('change', effectChromeElementClickHandler);
 effectSepiaElement.addEventListener('change', effectSepiaElementClickHandler);
-// effectMarvinElement.addEventListener('change');
-// effectPhobosElement.addEventListener('change');
-// effectHeatElement.addEventListener('change');
+effectMarvinElement.addEventListener('change', effectMarvinElementClickHandler);
+effectPhobosElement.addEventListener('change', effectPhobosElementClickHandler);
+effectHeatElement.addEventListener('change', effectHeatElementClickHandler);
 
 export { createSlider, destroySlider };
 
