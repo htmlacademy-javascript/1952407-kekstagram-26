@@ -27,34 +27,6 @@ const resetSlider = () => {
   imageUploadElement.removeAttribute('class');
 };
 
-const createSlider = () => {
-  noUiSlider.create(sliderElement, {
-    range: {
-      min: EffectsValues.default.minValue,
-      max: EffectsValues.default.maxValue,
-    },
-    start: EffectsValues.default.startValue,
-    step: EffectsValues.default.stepValue,
-    connect: 'lower',
-    format: {
-      to: (value) => { // значение из слайдера в форму
-        if (Number.isInteger(value)) {
-          return value.toFixed(0);
-        }
-        return value.toFixed(1);
-      },
-      from: (value) => parseFloat(value) // значение для слайдера
-    },
-  });
-
-  resetSlider();
-};
-
-const destroySlider = () => {
-  resetSlider();
-  sliderElement.noUiSlider.destroy();
-};
-
 const setSliderSettings = (effectId, minValue, maxValue, stepValue, startValue, effectClass, filterName, unitOfMeasurement) => {
   if (effectId.checked) {
     sliderElement.noUiSlider.updateOptions({
@@ -139,12 +111,53 @@ const effectHeatElementClickHandler = () => setSliderSettings(
   ''
 );
 
-effectNoneElement.addEventListener('change', effectNoneElementClickHandler);
-effectChromeElement.addEventListener('change', effectChromeElementClickHandler);
-effectSepiaElement.addEventListener('change', effectSepiaElementClickHandler);
-effectMarvinElement.addEventListener('change', effectMarvinElementClickHandler);
-effectPhobosElement.addEventListener('change', effectPhobosElementClickHandler);
-effectHeatElement.addEventListener('change', effectHeatElementClickHandler);
+const addListenersToFilters = () => {
+  effectNoneElement.addEventListener('change', effectNoneElementClickHandler);
+  effectChromeElement.addEventListener('change', effectChromeElementClickHandler);
+  effectSepiaElement.addEventListener('change', effectSepiaElementClickHandler);
+  effectMarvinElement.addEventListener('change', effectMarvinElementClickHandler);
+  effectPhobosElement.addEventListener('change', effectPhobosElementClickHandler);
+  effectHeatElement.addEventListener('change', effectHeatElementClickHandler);
+};
 
-export { createSlider, destroySlider };
+const removeListenersFromFilters = () => {
+  effectNoneElement.removeEventListener('change', effectNoneElementClickHandler);
+  effectChromeElement.removeEventListener('change', effectChromeElementClickHandler);
+  effectSepiaElement.removeEventListener('change', effectSepiaElementClickHandler);
+  effectMarvinElement.removeEventListener('change', effectMarvinElementClickHandler);
+  effectPhobosElement.removeEventListener('change', effectPhobosElementClickHandler);
+  effectHeatElement.removeEventListener('change', effectHeatElementClickHandler);
+};
+
+const createSlider = () => {
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: EffectsValues.default.minValue,
+      max: EffectsValues.default.maxValue,
+    },
+    start: EffectsValues.default.startValue,
+    step: EffectsValues.default.stepValue,
+    connect: 'lower',
+    format: {
+      to: (value) => { // значение из слайдера в форму
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: (value) => parseFloat(value) // значение для слайдера
+    },
+  });
+
+  resetSlider();
+  addListenersToFilters();
+};
+
+const destroySlider = () => {
+  resetSlider();
+  removeListenersFromFilters();
+  sliderElement.noUiSlider.destroy();
+};
+
+export { createSlider, destroySlider, addListenersToFilters };
 
