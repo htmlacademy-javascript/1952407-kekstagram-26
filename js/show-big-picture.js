@@ -24,10 +24,13 @@ const setDataToBigPicture = (photosData) => {
   bigPictureDescription.textContent = photosData.description;
 };
 
-const generateComments = (commentsArray) => {
+const generateComments = (photosData, commentsStart, commentsCounter) => {
   const commentsFragment = document.createDocumentFragment();
   bigPictureCommentsList.innerHTML = '';
-  commentsArray.forEach(({ message, name, avatar }) => {
+
+  const minificatedComments = photosData.comments.slice(commentsStart, commentsCounter);
+
+  minificatedComments.forEach(({ message, name, avatar }) => {
     const commentItem = makeElement('li', 'social__comment');
     const commentPicture = makeElement('img', 'social__picture');
     const commentText = makeElement('p', 'social__text', message);
@@ -59,13 +62,11 @@ const showComments = (photosData) => {
     bigPictureCurrentCommentsCount.textContent = SHOW_COMMENTS_STEP;
   }
 
-  const minificatedComments = photosData.comments.slice(commentsStart, commentsCounter);
-  generateComments(minificatedComments);
+  generateComments(photosData, commentsStart, commentsCounter);
 
   bigPictureLoaderClickHandler = () => {
     commentsCounter += SHOW_COMMENTS_STEP;
-    const additionalMinificatedcomments = photosData.comments.slice(commentsStart, commentsCounter);
-    generateComments(additionalMinificatedcomments);
+    generateComments(photosData, commentsStart, commentsCounter);
 
     bigPictureCurrentCommentsCount.textContent = bigPictureCommentsList.children.length;
 
