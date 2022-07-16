@@ -159,5 +159,5 @@ const destroySlider = () => {
   sliderElement.noUiSlider.destroy();
 };
 
-export { createSlider, destroySlider, addListenersToFilters };
+export { createSlider, destroySlider };
 
