@@ -41,4 +41,4 @@ const resetScale = () => {
 };
 
 
-export { resetScale, setDefaultScale };
+export { resetScale, setDefaultScale, imageUploadElement };
