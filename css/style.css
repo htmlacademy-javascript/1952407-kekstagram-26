@@ -710,6 +710,27 @@ main {
   border-radius: 5px;
 }
 
+.img-upload__field-wrapper {
+  position: relative;
+}
+
+.js-pristine-validation__error-text {
+  position: absolute;
+  text-transform: none;
+  margin: 0 auto;
+  font-size: 10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+}
+
+.img-upload__field-wrapper:nth-child(1) .js-pristine-validation__error-text {
+  top: -23%;
+}
+
+.img-upload__field-wrapper:nth-child(2) .js-pristine-validation__error-text {
+  top: 110%;
+}
 
 /**
  * Кнопка для отправки изображения

@@ -14,6 +14,7 @@ const bigPictureLoader = bigPicture.querySelector('.comments-loader');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const bigPictureCurrentCommentsCount = bigPicture.querySelector('.social__current-comments-count');
+let bigPictureLoaderClickHandler;
 
 // подстановка данных в большую картинку
 const setDataToBigPicture = (photosData) => {
@@ -23,10 +24,14 @@ const setDataToBigPicture = (photosData) => {
   bigPictureDescription.textContent = photosData.description;
 };
 
-const generateComments = (commentsArray) => {
+
+const generateComments = (photosData, commentsStart, commentsCounter) => {
   const commentsFragment = document.createDocumentFragment();
   bigPictureCommentsList.innerHTML = '';
-  commentsArray.forEach(({ message, name, avatar }) => {
+
+  const minificatedComments = photosData.comments.slice(commentsStart, commentsCounter);
+
+  minificatedComments.forEach(({ message, name, avatar }) => {
     const commentItem = makeElement('li', 'social__comment');
     const commentPicture = makeElement('img', 'social__picture');
     const commentText = makeElement('p', 'social__text', message);
@@ -58,13 +63,12 @@ const showComments = (photosData) => {
     bigPictureCurrentCommentsCount.textContent = SHOW_COMMENTS_STEP;
   }
 
-  const minificatedComments = photosData.comments.slice(commentsStart, commentsCounter);
-  generateComments(minificatedComments);
 
-  const bigPictureLoaderClickHandler = () => {
+  generateComments(photosData, commentsStart, commentsCounter);
+
+  bigPictureLoaderClickHandler = () => {
     commentsCounter += SHOW_COMMENTS_STEP;
-    const additionalMinificatedcomments = photosData.comments.slice(commentsStart, commentsCounter);
-    generateComments(additionalMinificatedcomments);
+    generateComments(photosData, commentsStart, commentsCounter);
 
     bigPictureCurrentCommentsCount.textContent = bigPictureCommentsList.children.length;
 
@@ -97,7 +101,7 @@ function closeButtonClickHandler() {
   closeButton.removeEventListener('click', closeButtonClickHandler);
   document.removeEventListener('keydown', bigPictureEscKeydownHandler);
   closeButton.removeEventListener('keydown', closeButtonEnterKeydownHandler);
-  bigPictureLoader.removeEventListener('click', bigPictureLoaderClickHandler); // как его удалить
+  bigPictureLoader.removeEventListener('click', bigPictureLoaderClickHandler);
 }
 
 const addPictureListener = (thumbnail, photosData, i) => {
