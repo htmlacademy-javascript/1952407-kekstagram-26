@@ -8,7 +8,7 @@ const scaleStep = 25;
 const defaultValue = 100;
 const percentageCoefficient = 0.01;
 
-const scaleControlbiggerElementClickHandler = () => {
+const scaleControlBiggerElementClickHandler = () => {
   let currentValue = parseInt(scaleControlInputElement['value'], 10);
   if (currentValue < maxValue) {
     currentValue += scaleStep;
@@ -30,14 +30,14 @@ const setDefaultScale = () => {
   scaleControlInputElement['value'] = `${defaultValue}%`;
   imageUploadElement.style.transform = `scale(${percentageCoefficient * defaultValue})`;
   scaleControlSmallerElement.addEventListener('click', scaleControlSmallerElementClickHandler);
-  scaleControlbiggerElement.addEventListener('click', scaleControlbiggerElementClickHandler);
+  scaleControlbiggerElement.addEventListener('click', scaleControlBiggerElementClickHandler);
 };
 
 const resetScale = () => {
   scaleControlInputElement['value'] = `${defaultValue}%`;
-  imageUploadElement.style.transform = `scale(${percentageCoefficient * defaultValue})`; // так или удалить вообще стиль (removeAttribute)
+  imageUploadElement.removeAttribute('style');
   scaleControlSmallerElement.removeEventListener('click', scaleControlSmallerElementClickHandler);
-  scaleControlbiggerElement.removeEventListener('click', scaleControlbiggerElementClickHandler);
+  scaleControlbiggerElement.removeEventListener('click', scaleControlBiggerElementClickHandler);
 };
 
 

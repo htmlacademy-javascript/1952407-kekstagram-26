@@ -2,6 +2,7 @@ import { imageUploadElement } from './image-scale.js';
 
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValueElement = document.querySelector('.effect-level__value');
+const sliderWrapperElement = document.querySelector('.img-upload__effect-level');
 
 const effectNoneElement = document.querySelector('#effect-none');
 const effectChromeElement = document.querySelector('#effect-chrome');
@@ -11,16 +12,16 @@ const effectPhobosElement = document.querySelector('#effect-phobos');
 const effectHeatElement = document.querySelector('#effect-heat');
 
 const EffectsValues = {
-  default: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
-  chrome: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
-  sepia: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
-  marvin: { startValue: 100, minValue: 0, maxValue: 100, stepValue: 1 },
-  phobos: { startValue: 3, minValue: 0, maxValue: 3, stepValue: 0.1 },
-  heat: { startValue: 3, minValue: 1, maxValue: 3, stepValue: 0.1 },
+  DEFAULT: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
+  CHROME: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
+  SEPIA: { startValue: 1, minValue: 0, maxValue: 1, stepValue: 0.1 },
+  MARVIN: { startValue: 100, minValue: 0, maxValue: 100, stepValue: 1 },
+  PHOBOS: { startValue: 3, minValue: 0, maxValue: 3, stepValue: 0.1 },
+  HEAT: { startValue: 3, minValue: 1, maxValue: 3, stepValue: 0.1 },
 };
 
 const resetSlider = () => {
-  sliderElement.classList.add('hidden');
+  sliderWrapperElement.classList.add('hidden');
   effectLevelValueElement.value = '';
   effectNoneElement.checked = 'true';
   imageUploadElement.removeAttribute('style');
@@ -38,7 +39,7 @@ const setSliderSettings = (effectId, minValue, maxValue, stepValue, startValue, 
     });
 
     sliderElement.noUiSlider.set(startValue);
-    sliderElement.classList.remove('hidden');
+    sliderWrapperElement.classList.remove('hidden');
     imageUploadElement.className = '';
     imageUploadElement.classList.add(effectClass);
 
@@ -50,7 +51,7 @@ const setSliderSettings = (effectId, minValue, maxValue, stepValue, startValue, 
 };
 
 const effectNoneElementClickHandler = () => {
-  sliderElement.classList.add('hidden');
+  sliderWrapperElement.classList.add('hidden');
   effectLevelValueElement.value = '';
   imageUploadElement.className = '';
   imageUploadElement.style.filter = 'none';
@@ -58,10 +59,10 @@ const effectNoneElementClickHandler = () => {
 
 const effectChromeElementClickHandler = () => setSliderSettings(
   effectChromeElement,
-  EffectsValues.chrome.minValue,
-  EffectsValues.chrome.maxValue,
-  EffectsValues.chrome.stepValue,
-  EffectsValues.chrome.startValue,
+  EffectsValues.CHROME.minValue,
+  EffectsValues.CHROME.maxValue,
+  EffectsValues.CHROME.stepValue,
+  EffectsValues.CHROME.startValue,
   'effects__preview--chrome',
   'grayscale',
   ''
@@ -69,10 +70,10 @@ const effectChromeElementClickHandler = () => setSliderSettings(
 
 const effectSepiaElementClickHandler = () => setSliderSettings(
   effectSepiaElement,
-  EffectsValues.sepia.minValue,
-  EffectsValues.sepia.maxValue,
-  EffectsValues.sepia.stepValue,
-  EffectsValues.sepia.startValue,
+  EffectsValues.SEPIA.minValue,
+  EffectsValues.SEPIA.maxValue,
+  EffectsValues.SEPIA.stepValue,
+  EffectsValues.SEPIA.startValue,
   'effects__preview--sepia',
   'sepia',
   ''
@@ -80,10 +81,10 @@ const effectSepiaElementClickHandler = () => setSliderSettings(
 
 const effectMarvinElementClickHandler = () => setSliderSettings(
   effectMarvinElement,
-  EffectsValues.marvin.minValue,
-  EffectsValues.marvin.maxValue,
-  EffectsValues.marvin.stepValue,
-  EffectsValues.marvin.startValue,
+  EffectsValues.MARVIN.minValue,
+  EffectsValues.MARVIN.maxValue,
+  EffectsValues.MARVIN.stepValue,
+  EffectsValues.MARVIN.startValue,
   'effects__preview--marvin',
   'invert',
   '%'
@@ -91,10 +92,10 @@ const effectMarvinElementClickHandler = () => setSliderSettings(
 
 const effectPhobosElementClickHandler = () => setSliderSettings(
   effectPhobosElement,
-  EffectsValues.phobos.minValue,
-  EffectsValues.phobos.maxValue,
-  EffectsValues.phobos.stepValue,
-  EffectsValues.phobos.startValue,
+  EffectsValues.PHOBOS.minValue,
+  EffectsValues.PHOBOS.maxValue,
+  EffectsValues.PHOBOS.stepValue,
+  EffectsValues.PHOBOS.startValue,
   'effects__preview--phobos',
   'blur',
   'px'
@@ -102,10 +103,10 @@ const effectPhobosElementClickHandler = () => setSliderSettings(
 
 const effectHeatElementClickHandler = () => setSliderSettings(
   effectHeatElement,
-  EffectsValues.heat.minValue,
-  EffectsValues.heat.maxValue,
-  EffectsValues.heat.stepValue,
-  EffectsValues.heat.startValue,
+  EffectsValues.HEAT.minValue,
+  EffectsValues.HEAT.maxValue,
+  EffectsValues.HEAT.stepValue,
+  EffectsValues.HEAT.startValue,
   'effects__preview--heat',
   'brightness',
   ''
@@ -132,11 +133,11 @@ const removeListenersFromFilters = () => {
 const createSlider = () => {
   noUiSlider.create(sliderElement, {
     range: {
-      min: EffectsValues.default.minValue,
-      max: EffectsValues.default.maxValue,
+      min: EffectsValues.DEFAULT.minValue,
+      max: EffectsValues.DEFAULT.maxValue,
     },
-    start: EffectsValues.default.startValue,
-    step: EffectsValues.default.stepValue,
+    start: EffectsValues.DEFAULT.startValue,
+    step: EffectsValues.DEFAULT.stepValue,
     connect: 'lower',
     format: {
       to: (value) => { // значение из слайдера в форму
