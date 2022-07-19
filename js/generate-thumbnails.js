@@ -1,7 +1,4 @@
-import { generatePhotos } from './data.js';
 import { addPictureListener } from './show-big-picture.js';
-
-// const usersPhotosData = generatePhotos();
 
 const renderPhotos = (usersPhotosData) => {
   const pictures = document.querySelector('.pictures');

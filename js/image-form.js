@@ -1,9 +1,10 @@
 import { pristine } from './validate-form.js';
-import { isEscapeKey, showAlert } from './util.js';
+import { isEscapeKey } from './util.js';
 import { resetScale, setDefaultScale } from './image-scale.js';
 import { createSlider, destroySlider } from './image-filters.js';
 import { sendData } from './api.js';
 import { openSuccessModal } from './success-popup.js';
+import { openFailModal } from './fail-popup.js';
 
 const imageFormElement = document.querySelector('.img-upload__form');
 const hashtagInputElement = imageFormElement.querySelector('.text__hashtags');
@@ -16,7 +17,9 @@ const submitButtonElement = imageFormElement.querySelector('.img-upload__submit'
 // открытие и закрытие формы
 const photoEditPopupElementEscKeydownHandler = (evt) => {
   if (isEscapeKey(evt)) {
-    if (document.activeElement === hashtagInputElement || document.activeElement === commentInputElement) {
+    if (document.activeElement === hashtagInputElement
+      || document.activeElement === commentInputElement
+      || document.querySelector('.error')) {
       return;
     }
     closeButtonElementClickHandler();
@@ -81,13 +84,11 @@ imageFormElement.addEventListener('submit', (evt) => {
         unblockSubmitButton();
       },
       () => {
-        // тут попап ошибки
+        openFailModal();
         unblockSubmitButton();
       },
       new FormData(evt.target)
     );
-  } else {
-    console.log('форма невалидна');
   }
 });
 

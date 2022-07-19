@@ -10,12 +10,15 @@ const getData = (onSuccess, onFail) => {
       if (response.ok) {
         return response.json();
       }
+      if (!response.ok) {
+        throw new Error(allertMessage);
+      }
     })
     .then((usersPhotosData) => {
       onSuccess(usersPhotosData);
     })
-    .catch(() => {
-      onFail();
+    .catch((error) => {
+      onFail(error);
     });
 };
 
@@ -33,13 +36,15 @@ const sendData = (onSuccess, onFail, body) => {
       method: 'POST',
       body,
     },
-  ).then((response) => {
-    if (response.ok) {
-      onSuccess();
-    } else {
-      onFail();
-    }
-  })
+  )
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      }
+      if (!response.ok) {
+        onFail();
+      }
+    })
     .catch(() => {
       onFail();
     });
