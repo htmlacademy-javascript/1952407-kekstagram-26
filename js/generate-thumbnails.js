@@ -1,9 +1,9 @@
 import { generatePhotos } from './data.js';
 import { addPictureListener } from './show-big-picture.js';
 
-const usersPhotosData = generatePhotos();
+// const usersPhotosData = generatePhotos();
 
-const renderPhotos = () => {
+const renderPhotos = (usersPhotosData) => {
   const pictures = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture')
     .content
@@ -25,5 +25,4 @@ const renderPhotos = () => {
   return pictures.append(usersPhotoFragment);
 };
 
-renderPhotos();
-
+export { renderPhotos };
