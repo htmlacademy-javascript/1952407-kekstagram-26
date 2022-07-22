@@ -22,7 +22,7 @@ const changeButtonsClass = (buttonElement) => {
   buttonElement.classList.add('img-filters__button--active');
 };
 
-const renderFilteredPhoto = (debounce(
+const renderFilteredPhotos = (debounce(
   (usersPhotosData) => {
     deleteImages();
     renderPhotos(usersPhotosData);
@@ -32,21 +32,21 @@ const renderFilteredPhoto = (debounce(
 const defaultButtonClickHandler = (usersPhotosData) => {
   changeButtonsClass(defaultFilterButtonElement);
 
-  renderFilteredPhoto(usersPhotosData);
+  renderFilteredPhotos(usersPhotosData);
 };
 
 const randomButtonClickHandler = (usersPhotosData) => {
   changeButtonsClass(randomFilterButtonElement);
 
   const randomUsersPhotosData = getUniqueArray(usersPhotosData, IMAGE_QUANTITY);
-  renderFilteredPhoto(randomUsersPhotosData);
+  renderFilteredPhotos(randomUsersPhotosData);
 };
 
 const discussedButtonClickHandler = (usersPhotosData) => {
   changeButtonsClass(discussedFilterButtonElement);
 
   const discussedUsersPhotosData = usersPhotosData.slice().sort((a, b) => a.comments < b.comments ? 1 : -1);
-  renderFilteredPhoto(discussedUsersPhotosData);
+  renderFilteredPhotos(discussedUsersPhotosData);
 };
 
 
