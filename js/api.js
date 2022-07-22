@@ -1,6 +1,3 @@
-import { renderPhotos } from './generate-thumbnails.js';
-import { showAlert } from './util.js';
-
 const allertMessage = 'Не удалось отобразить ленту. Попробуйте перезагрузить страницу.';
 
 // запрос данных с сервера
@@ -22,16 +19,10 @@ const getData = (onSuccess, onFail) => {
     });
 };
 
-getData((usersPhotosData) => {
-  renderPhotos(usersPhotosData);
-}, () => {
-  showAlert(allertMessage);
-});
-
 // отправка данных на сервер. загрузка новых фотографий
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://26.javascript.pages.academy/kekstagram',
+    'https://26.javascript.pages.academ/kekstagram',
     {
       method: 'POST',
       body,
@@ -50,4 +41,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-export { sendData };
+export { getData, allertMessage, sendData };
