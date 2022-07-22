@@ -22,7 +22,7 @@ const getData = (onSuccess, onFail) => {
 // отправка данных на сервер. загрузка новых фотографий
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://26.javascript.pages.academ/kekstagram',
+    'https://26.javascript.pages.academy/kekstagram',
     {
       method: 'POST',
       body,
