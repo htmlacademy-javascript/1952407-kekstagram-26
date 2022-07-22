@@ -1,7 +1,7 @@
-import { getUniqueArray } from './util.js';
+import { getUniqueArray, debounce } from './util.js';
 import { renderPhotos } from './generate-thumbnails.js';
+import { IMAGE_QUANTITY, DELAY_DURATION } from './constants.js';
 
-const IMAGE_QUANTITY = 10;
 const imageFiltersElement = document.querySelector('.img-filters');
 const defaultFilterButtonElement = imageFiltersElement.querySelector('#filter-default');
 const randomFilterButtonElement = imageFiltersElement.querySelector('#filter-random');
@@ -22,25 +22,31 @@ const changeButtonsClass = (buttonElement) => {
   buttonElement.classList.add('img-filters__button--active');
 };
 
+const renderFilteredPhoto = (debounce(
+  (usersPhotosData) => {
+    deleteImages();
+    renderPhotos(usersPhotosData);
+  }, DELAY_DURATION
+));
+
 const defaultButtonClickHandler = (usersPhotosData) => {
-  deleteImages();
   changeButtonsClass(defaultFilterButtonElement);
-  renderPhotos(usersPhotosData);
+
+  renderFilteredPhoto(usersPhotosData);
 };
 
 const randomButtonClickHandler = (usersPhotosData) => {
-  deleteImages();
   changeButtonsClass(randomFilterButtonElement);
 
   const randomUsersPhotosData = getUniqueArray(usersPhotosData, IMAGE_QUANTITY);
-  renderPhotos(randomUsersPhotosData);
+  renderFilteredPhoto(randomUsersPhotosData);
 };
 
 const discussedButtonClickHandler = (usersPhotosData) => {
-  deleteImages();
   changeButtonsClass(discussedFilterButtonElement);
+
   const discussedUsersPhotosData = usersPhotosData.slice().sort((a, b) => a.comments < b.comments ? 1 : -1);
-  renderPhotos(discussedUsersPhotosData);
+  renderFilteredPhoto(discussedUsersPhotosData);
 };
 
 
