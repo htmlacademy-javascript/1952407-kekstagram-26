@@ -101,6 +101,36 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
+// Функция debounce для устранения дребезга. Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
+
+function debounce (callback, timeoutDelay = 500) {
+  // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
+  // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
+  let timeoutId;
+
+  return (...rest) => {
+    // Перед каждым новым вызовом удаляем предыдущий таймаут,
+    // чтобы они не накапливались
+    clearTimeout(timeoutId);
+
+    // Затем устанавливаем новый таймаут с вызовом колбэка на ту же задержку
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+    // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
+    // пока действие совершается чаще, чем переданная задержка timeoutDelay
+  };
+}
+
+// получение из массива данных нового массива данных с уникальными значениями и заданым количеством элементов
+const getUniqueArray = (dataArray, arrayLength) => {
+  const set = new Set();
+  while (set.size < arrayLength) {
+    set.add(getRandomArrayElement(dataArray));
+  }
+  return set;
+};
+
 export {
   getRandomPositiveInteger,
   getArrayWithRandomNumbers,
@@ -110,5 +140,7 @@ export {
   makeElement,
   isEscapeKey,
   isEnterKey,
-  showAlert
+  showAlert,
+  debounce,
+  getUniqueArray
 };

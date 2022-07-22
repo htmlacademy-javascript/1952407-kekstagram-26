@@ -1,6 +1,3 @@
-import { renderPhotos } from './generate-thumbnails.js';
-import { showAlert } from './util.js';
-
 const allertMessage = 'Не удалось отобразить ленту. Попробуйте перезагрузить страницу.';
 
 // запрос данных с сервера
@@ -21,12 +18,6 @@ const getData = (onSuccess, onFail) => {
       onFail(error);
     });
 };
-
-getData((usersPhotosData) => {
-  renderPhotos(usersPhotosData);
-}, () => {
-  showAlert(allertMessage);
-});
 
 // отправка данных на сервер. загрузка новых фотографий
 const sendData = (onSuccess, onFail, body) => {
@@ -50,4 +41,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-export { sendData };
+export { getData, allertMessage, sendData };

@@ -9,7 +9,7 @@ const okButtonElement = successModalElement.querySelector('.success__button');
 const successInnerElement = successModalElement.querySelector('.success__inner');
 const successTitleElement = successModalElement.querySelector('.success__title');
 
-const successModalElementBurqaClickHandler = (evt) => {
+const successModalElementOverlayClickHandler = (evt) => {
   if (evt.target === successInnerElement || evt.target === successTitleElement) {
     return;
   }
@@ -26,13 +26,13 @@ function okButtonElementClickHandler() {
   successModalElement.remove();
   okButtonElement.removeEventListener('click', okButtonElementClickHandler);
   document.removeEventListener('keydown', successModalElementEscKeydownHandler);
-  successModalElement.removeEventListener('click', successModalElementBurqaClickHandler);
+  successModalElement.removeEventListener('click', successModalElementOverlayClickHandler);
 }
 
 const closeSuccessModal = () => {
   okButtonElement.addEventListener('click', okButtonElementClickHandler);
   document.addEventListener('keydown', successModalElementEscKeydownHandler);
-  successModalElement.addEventListener('click', successModalElementBurqaClickHandler);
+  successModalElement.addEventListener('click', successModalElementOverlayClickHandler);
 };
 
 const openSuccessModal = () => {
