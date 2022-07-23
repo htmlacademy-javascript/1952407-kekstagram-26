@@ -17,7 +17,7 @@ const pristine = new Pristine(imageFormElement, {
 // хэштэг
 const checkHashtagsText = (inputValue) => {
   const hashtagsArray = inputValue.split(' ').filter((element) => element !== '');
-  for (let i = 0; i < hashtagsArray.length; i++) { // почему то с forEach не работает
+  for (let i = 0; i < hashtagsArray.length; i++) {
     if (!hashtagPattern.test(hashtagsArray[i])) {
       return false;
     }
@@ -41,7 +41,7 @@ pristine.addValidator(
   checkHashtagsForNoRepeate,
   'Нельзя повторять хэштэги',
   1, // приоритет показа смс
-  true // остановка. если ошибка показывает 1 смс
+  true // остановка. если ошибка, то показывает только 1 смс из всех
 );
 
 pristine.addValidator(

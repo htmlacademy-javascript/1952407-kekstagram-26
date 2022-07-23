@@ -50,7 +50,7 @@ const discussedButtonClickHandler = (usersPhotosData) => {
 };
 
 
-const getFiltredImages = (usersPhotosData) => {
+const getFilteredImages = (usersPhotosData) => {
   imageFiltersElement.classList.remove('img-filters--inactive');
 
   defaultFilterButtonElement.addEventListener('click', defaultButtonClickHandler.bind(this, usersPhotosData));
@@ -58,4 +58,4 @@ const getFiltredImages = (usersPhotosData) => {
   discussedFilterButtonElement.addEventListener('click', discussedButtonClickHandler.bind(this, usersPhotosData));
 };
 
-export { getFiltredImages };
+export { getFilteredImages };
