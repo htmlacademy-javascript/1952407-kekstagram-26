@@ -2,7 +2,7 @@ import { hashtagInputElement, commentInputElement, imageFormElement } from './im
 import { checkStringLength } from './util.js';
 import { MAX_COMMENT_LENGTH, MAX_NUMBER_OF_HASHTAGS } from './constants.js';
 
-const hashtagPattern = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const HASHTAG_PATTERN = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
 // валидация с помощью pristine
 const pristine = new Pristine(imageFormElement, {
@@ -18,7 +18,7 @@ const pristine = new Pristine(imageFormElement, {
 const checkHashtagsText = (inputValue) => {
   const hashtagsArray = inputValue.split(' ').filter((element) => element !== '');
   for (let i = 0; i < hashtagsArray.length; i++) {
-    if (!hashtagPattern.test(hashtagsArray[i])) {
+    if (!HASHTAG_PATTERN.test(hashtagsArray[i])) {
       return false;
     }
   }
