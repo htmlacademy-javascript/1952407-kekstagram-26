@@ -140,12 +140,7 @@ const createSlider = () => {
     step: EffectsValues.DEFAULT.stepValue,
     connect: 'lower',
     format: {
-      to: (value) => { // значение из слайдера в форму
-        if (Number.isInteger(value)) {
-          return value.toFixed(0);
-        }
-        return value.toFixed(1);
-      },
+      to: (value) => Number.isInteger(value) ? value.toFixed(0) : value.toFixed(1), // значение из слайдера в форму
       from: (value) => parseFloat(value) // значение для слайдера
     },
   });
