@@ -1,12 +1,12 @@
-const scaleControlSmallerElement = document.querySelector('.scale__control--smaller');
-const scaleControlbiggerElement = document.querySelector('.scale__control--bigger');
-const scaleControlInputElement = document.querySelector('.scale__control--value');
-const imageUploadElement = document.querySelector('.img-upload__preview img');
 const MAX_VALUE = 100;
 const MIN_VALUE = 25;
 const SCALE_STEP = 25;
 const DEFAULT_VALUE = 100;
 const PERCENTAGE_COEFFICIENT = 0.01;
+const scaleControlSmallerElement = document.querySelector('.scale__control--smaller');
+const scaleControlBiggerElement = document.querySelector('.scale__control--bigger');
+const scaleControlInputElement = document.querySelector('.scale__control--value');
+const imageUploadElement = document.querySelector('.img-upload__preview img');
 
 const scaleControlBiggerElementClickHandler = () => {
   let currentValue = parseInt(scaleControlInputElement['value'], 10);
@@ -30,14 +30,14 @@ const setDefaultScale = () => {
   scaleControlInputElement['value'] = `${DEFAULT_VALUE}%`;
   imageUploadElement.style.transform = `scale(${PERCENTAGE_COEFFICIENT * DEFAULT_VALUE})`;
   scaleControlSmallerElement.addEventListener('click', scaleControlSmallerElementClickHandler);
-  scaleControlbiggerElement.addEventListener('click', scaleControlBiggerElementClickHandler);
+  scaleControlBiggerElement.addEventListener('click', scaleControlBiggerElementClickHandler);
 };
 
 const resetScale = () => {
   scaleControlInputElement['value'] = `${DEFAULT_VALUE}%`;
   imageUploadElement.removeAttribute('style');
   scaleControlSmallerElement.removeEventListener('click', scaleControlSmallerElementClickHandler);
-  scaleControlbiggerElement.removeEventListener('click', scaleControlBiggerElementClickHandler);
+  scaleControlBiggerElement.removeEventListener('click', scaleControlBiggerElementClickHandler);
 };
 
 
