@@ -1,14 +1,12 @@
-import { MAX_COMMENT_LENGTH } from './constants.js';
-
-const ALERT_SHOW_TIME = 5000;
+import { MAX_COMMENT_LENGTH, ALERT_SHOW_TIME, DEFAULT_DELAY} from './constants.js';
 
 // Функция получения рандомных чисел. От Кекса
-function getRandomPositiveInteger(a, b) {
+const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-}
+};
 
 // Функция для получения случайного элемента из массива. Элемент может повторяться.
 const getRandomArrayElement = (array) => array[getRandomPositiveInteger(0, array.length - 1)];
@@ -16,10 +14,12 @@ const getRandomArrayElement = (array) => array[getRandomPositiveInteger(0, array
 // Получение из массива данных нового массива данных с уникальными значениями и заданым количеством элементов
 const getUniqueArray = (dataArray, arrayLength) => {
   const set = new Set();
+  const uniqueArray = [];
   while (set.size < arrayLength) {
     set.add(getRandomArrayElement(dataArray));
   }
-  return set;
+  uniqueArray.push(...set);
+  return uniqueArray;
 };
 
 // Функция для проверки максимальной длины строки
@@ -66,7 +66,7 @@ const showAlert = (message) => {
 
 // Функция debounce для устранения дребезга. Функция взята из интернета и доработана
 // Источник - https://www.freecodecamp.org/news/javascript-debounce-example
-const debounce = (callback, timeoutDelay = 500) => {
+const debounce = (callback, timeoutDelay = DEFAULT_DELAY) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
